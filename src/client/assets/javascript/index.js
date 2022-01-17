@@ -320,14 +320,16 @@ function getTracks() {
   // GET request to `${SERVER}/api/tracks`
   fetch(`${SERVER}/api/tracks`)
     .then((response) => response.json())
-    .then((tracks) => console.log(tracks));
+    .then((tracks) => console.log(tracks))
+    .catch((error) => console.log(error));
 }
 
 function getRacers() {
   // GET request to `${SERVER}/api/cars`
   fetch(`${SERVER}/api/cars`)
     .then((response) => response.json())
-    .then((racers) => console.log(racers));
+    .then((racers) => console.log(racers))
+    .catch((error) => console.log(error));
 }
 
 function createRace(player_id, track_id) {
