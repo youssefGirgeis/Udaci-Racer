@@ -144,6 +144,7 @@ function handleSelectPodRacer(target) {
   target.classList.add('selected');
 
   // TODO - save the selected racer to the store
+  store.player_id = target.id;
 }
 
 function handleSelectTrack(target) {
@@ -159,6 +160,7 @@ function handleSelectTrack(target) {
   target.classList.add('selected');
 
   // TODO - save the selected track id to the store
+  store.track_id = target.id;
 }
 
 function handleAccelerate() {
@@ -191,9 +193,9 @@ function renderRacerCard(racer) {
   return `
 		<li class="card podracer" id="${id}">
 			<h3>${driver_name}</h3>
-			<p>${top_speed}</p>
-			<p>${acceleration}</p>
-			<p>${handling}</p>
+			<p>Top Speed: ${top_speed}</p>
+			<p>Acceleration: ${acceleration}</p>
+			<p>Handling: ${handling}</p>
 		</li>
 	`;
 }
