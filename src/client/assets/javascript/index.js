@@ -90,14 +90,8 @@ async function handleCreateRace() {
   renderAt('#race', renderRaceStartView(race.Track, race.cars));
 
   // The race has been created, now start the countdown
-  // TODO - call the async function runCountdown
   await runCountdown();
-
-  // TODO - call the async function startRace
-
   await startRace(store.race_id);
-
-  // TODO - call the async function runRace
   await runRace(store.race_id);
 }
 
@@ -182,6 +176,7 @@ function handleSelectTrack(target) {
 function handleAccelerate() {
   console.log('accelerate button clicked');
   // TODO - Invoke the API call to accelerate
+  accelerate(store.race_id);
 }
 
 // HTML VIEWS ------------------------------------------------
@@ -381,4 +376,8 @@ function accelerate(id) {
   // POST request to `${SERVER}/api/races/${id}/accelerate`
   // options parameter provided as defaultFetchOpts
   // no body or datatype needed for this request
+  return fetch(`${SERVER}/api/races/${id}/accelerate`, {
+    method: 'POST',
+    ...defaultFetchOpts(),
+  }).catch((err) => console.log('Problem with accelerate request:: ', err));
 }
