@@ -16,11 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
 async function onPageLoad() {
   try {
     getTracks().then((tracks) => {
+      console.log('Track', tracks);
       const html = renderTrackCards(tracks);
       renderAt('#tracks', html);
     });
 
     getRacers().then((racers) => {
+      console.log('Racers', racers);
       const html = renderRacerCars(racers);
       renderAt('#racers', html);
     });
@@ -38,6 +40,7 @@ function setupClickHandlers() {
 
       // Race track form field
       if (target.matches('.card.track')) {
+        console.log(target);
         handleSelectTrack(target);
       }
 
@@ -81,7 +84,7 @@ async function handleCreateRace() {
 
   // const race = TODO - invoke the API call to create the race, then save the result
   const race = await createRace(playerId, trackId).then((raceInfo) => raceInfo);
-  console.log(race);
+  console.log('race', race);
   // TODO - update the store with the race id
   store.race_id = race.ID - 1;
   // For the API to work properly, the race id should be race id - 1
@@ -133,8 +136,7 @@ async function runCountdown() {
         }
       }, 1000);
       // run this DOM manipulation to decrement the countdown for the user
-
-      // TODO - if the countdown is done, clear the interval, resolve the promise, and return
+      //if the countdown is done, clear the interval, resolve the promise, and return
     });
   } catch (error) {
     console.log(error);
@@ -153,7 +155,7 @@ function handleSelectPodRacer(target) {
   // add class selected to current target
   target.classList.add('selected');
 
-  // TODO - save the selected racer to the store
+  //save the selected racer to the store
   store.player_id = target.id;
 }
 
@@ -169,13 +171,12 @@ function handleSelectTrack(target) {
   // add class selected to current target
   target.classList.add('selected');
 
-  // TODO - save the selected track id to the store
   store.track_id = target.id;
 }
 
 function handleAccelerate() {
   console.log('accelerate button clicked');
-  // TODO - Invoke the API call to accelerate
+  //Invoke the API call to accelerate
   accelerate(store.race_id);
 }
 
