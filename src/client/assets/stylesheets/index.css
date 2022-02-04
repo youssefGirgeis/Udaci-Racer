@@ -29,13 +29,16 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 h1 {
-  color: white;
+  color: rgb(48, 24, 3);
   text-shadow: 3px 2px hsl(0, 2%, 51%);
   font-size: 70px;
   text-transform: uppercase;
+  position: absolute;
+  top: 5%;
 }
 
 h2 {
@@ -67,7 +70,7 @@ p {
 .button {
   width: 250px;
   padding: 20px 10px;
-  background-color: green;
+  background-color: rgb(45, 163, 45);
   cursor: pointer;
   border-radius: 4px;
   border-color: 1px solid green;

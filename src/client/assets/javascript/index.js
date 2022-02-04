@@ -16,13 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
 async function onPageLoad() {
   try {
     getTracks().then((tracks) => {
-      console.log('Track', tracks);
       const html = renderTrackCards(tracks);
       renderAt('#tracks', html);
     });
 
     getRacers().then((racers) => {
-      console.log('Racers', racers);
       const html = renderRacerCars(racers);
       renderAt('#racers', html);
     });
@@ -33,6 +31,9 @@ async function onPageLoad() {
 }
 
 function setupClickHandlers() {
+  let isPlayerSelected = false;
+  let isTrackSelected = false;
+
   document.addEventListener(
     'click',
     function (event) {
@@ -40,13 +41,14 @@ function setupClickHandlers() {
 
       // Race track form field
       if (target.matches('.card.track')) {
-        console.log(target);
         handleSelectTrack(target);
+        isPlayerSelected = true;
       }
 
       // Podracer form field
       if (target.matches('.card.podracer')) {
         handleSelectPodRacer(target);
+        isTrackSelected = true;
       }
 
       // Submit create race form
@@ -54,7 +56,9 @@ function setupClickHandlers() {
         event.preventDefault();
 
         // start race
-        handleCreateRace();
+        isPlayerSelected && isTrackSelected
+          ? handleCreateRace()
+          : alert('Please select a player and track to start the race 😎');
       }
 
       // Handle acceleration click
