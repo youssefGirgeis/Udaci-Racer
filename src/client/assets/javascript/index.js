@@ -140,7 +140,7 @@ async function runCountdown() {
       // use Javascript's built in setInterval method to count down once per second
       const countDownInterval = setInterval(() => {
         document.getElementById('big-numbers').innerHTML = --timer;
-        if (timer === 0) {
+        if (timer === 1) {
           clearInterval(countDownInterval);
           resolve();
           return;
