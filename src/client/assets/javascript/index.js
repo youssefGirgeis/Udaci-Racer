@@ -1,6 +1,4 @@
-// PROVIDED CODE BELOW (LINES 1 - 80) DO NOT REMOVE
-
-// The store will hold all information needed globally
+// The store will hold race information needed globally
 var store = {
   track_id: undefined,
   player_id: undefined,
@@ -13,6 +11,11 @@ document.addEventListener('DOMContentLoaded', function () {
   setupClickHandlers();
 });
 
+/**
+ * this finction is called after the DOM is loaded,
+ * it calls getTrack() function which fetches tracks and then render them on page.
+ * it also calls getRacers() function which fetch players, then render them on the page
+ */
 async function onPageLoad() {
   try {
     getTracks().then((tracks) => {
@@ -30,7 +33,12 @@ async function onPageLoad() {
   }
 }
 
+/**
+ * handles click events and depending on the element clicked to it calls different functions
+ */
+
 function setupClickHandlers() {
+  // to check if a player and track selected
   let isPlayerSelected = false;
   let isTrackSelected = false;
 
@@ -55,7 +63,7 @@ function setupClickHandlers() {
       if (target.matches('#submit-create-race')) {
         event.preventDefault();
 
-        // start race
+        // start race only if a player and a track selected
         isPlayerSelected && isTrackSelected
           ? handleCreateRace()
           : alert('Please select a player and track to start the race 😎');
@@ -78,18 +86,17 @@ async function delay(ms) {
     console.log(error);
   }
 }
-// ^ PROVIDED CODE ^ DO NOT REMOVE
 
 // This async function controls the flow of the race, add the logic and error handling
 async function handleCreateRace() {
-  // TODO - Get player_id and track_id from the store
+  //Get player_id and track_id from the store
   const playerId = store.player_id;
   const trackId = store.track_id;
 
-  // const race = TODO - invoke the API call to create the race, then save the result
+  // invoke the API call to create the race, then save the result
   const race = await createRace(playerId, trackId).then((raceInfo) => raceInfo);
-  console.log('race', race);
-  // TODO - update the store with the race id
+
+  // update the store with the race id
   store.race_id = race.ID - 1;
   // For the API to work properly, the race id should be race id - 1
 
@@ -104,7 +111,7 @@ async function handleCreateRace() {
 
 function runRace(raceID) {
   return new Promise((resolve) => {
-    // TODO - use Javascript's built in setInterval method to get race info every 500ms
+    // use Javascript's built in setInterval method to get race info every 500ms
     const raceInterval = setInterval(() => {
       getRace(store.race_id)
         .then((raceInfo) => {
@@ -130,7 +137,7 @@ async function runCountdown() {
     let timer = 3;
 
     return new Promise((resolve) => {
-      // TODO - use Javascript's built in setInterval method to count down once per second
+      // use Javascript's built in setInterval method to count down once per second
       const countDownInterval = setInterval(() => {
         document.getElementById('big-numbers').innerHTML = --timer;
         if (timer === 0) {
@@ -179,7 +186,6 @@ function handleSelectTrack(target) {
 }
 
 function handleAccelerate() {
-  console.log('accelerate button clicked');
   //Invoke the API call to accelerate
   accelerate(store.race_id);
 }
@@ -278,7 +284,7 @@ function resultsView(positions) {
 		</header>
 		<main>
 			${raceProgress(positions)}
-			<a href="/race">Start a new race</a>
+			<a class="new-race" href="/race">Start a new race</a>
 		</main>
 	`;
 }
@@ -364,7 +370,6 @@ function createRace(player_id, track_id) {
 
 function getRace(id) {
   // GET request to `${SERVER}/api/races/${id}`
-  console.log('getRace:');
   return fetch(`${SERVER}/api/races/${id}`)
     .then((response) => response.json())
     .catch((err) => console.log('error in the getRace', err));
